@@ -12,7 +12,7 @@ function MentionsCard({ allNotes, userList, onChangeCb, note } : {allNotes:any, 
   let textAreaControl = React.createRef<HTMLTextAreaElement>();
   const [isReadOnly, setInputState] = useState(!note.id ? false : true);
   const [isListenerAttached, setListener] = useState(false);
-  //const [isClickListenerAttached, setClickListener] = useState(false);
+  const [isClickListenerAttached, setClickListener] = useState(false);
 
   React.useEffect(() => {
     if (!note.id && !isListenerAttached) {
@@ -22,15 +22,13 @@ function MentionsCard({ allNotes, userList, onChangeCb, note } : {allNotes:any, 
       });
       setListener(true);
     }
-  }, []);
+  }, [note.id, isListenerAttached]);
 
   React.useEffect(() => {
-    console.log('hello');
-    if (!note.id ) {
+    if (!note.id && !isClickListenerAttached) {
       const noteMentions = Array.from(document.getElementsByClassName('my-mention'));
       if (noteMentions) {
         noteMentions.forEach((nm) => {
-          console.log('add listener');
           nm?.addEventListener('click', function() {
             document.dispatchEvent(new CustomEvent('mention:click', {
               detail: {
@@ -41,9 +39,9 @@ function MentionsCard({ allNotes, userList, onChangeCb, note } : {allNotes:any, 
         });
       }
       
-      //setClickListener(true);
+      setClickListener(true);
     }
-  }, []);
+  }, [note.id]);
    
   const handleChange = (note:any, event:any, newValue:string, newPlainTextValue:string, mentions:MentionItem[] ) => {
     if (note.id > 0) {

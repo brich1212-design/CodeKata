@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { moqUserList, moqNotes, upsertNote } from './services/kataService';
+import React, { useState, useRef } from 'react';
+import { moqUserList, moqNotes } from './services/kataService';
 import MentionsCard from './MentionsCard';
 import { Note } from './common/models/kata-types';
 import './App.css';
@@ -54,7 +54,7 @@ function App() {
     } else {
       console.log('No user found...');
     }
-  }, []);
+  }, [users]);
 
   React.useEffect(() => {
     document.addEventListener("mention:click", clickMention);
