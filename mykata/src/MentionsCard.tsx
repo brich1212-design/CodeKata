@@ -12,7 +12,6 @@ function MentionsCard({ allNotes, userList, onChangeCb, note } : {allNotes:any, 
   let textAreaControl = React.createRef<HTMLTextAreaElement>();
   const [isReadOnly, setInputState] = useState(!note.id ? false : true);
   const [isListenerAttached, setListener] = useState(false);
-  const [isClickListenerAttached, setClickListener] = useState(false);
 
   React.useEffect(() => {
     if (!note.id && !isListenerAttached) {
@@ -24,24 +23,32 @@ function MentionsCard({ allNotes, userList, onChangeCb, note } : {allNotes:any, 
     }
   }, [note.id, isListenerAttached]);
 
+  function mentionClick(nm: any) {
+    document.dispatchEvent(new CustomEvent('mention:click', {
+      detail: {
+        username: nm.target.innerHTML,
+      }
+    }))
+  };
+
   React.useEffect(() => {
-    if (!note.id && !isClickListenerAttached) {
+    if (!note.id) {
       const noteMentions = Array.from(document.getElementsByClassName('my-mention'));
       if (noteMentions) {
         noteMentions.forEach((nm) => {
-          nm?.addEventListener('click', function() {
-            document.dispatchEvent(new CustomEvent('mention:click', {
-              detail: {
-                username: nm.innerHTML,
-              }
-            }));
-          });
+          nm?.addEventListener('click', mentionClick);
         });
       }
-      
-      setClickListener(true);
+
+      return function cleanup() {
+        if (noteMentions) {
+          noteMentions.forEach((nm) => {
+            nm?.removeEventListener('click', mentionClick);
+          });
+        }
+      }
     }
-  }, [note.id, isClickListenerAttached]);
+  }, [note.id, note.mentions]);
    
   const handleChange = (note:any, event:any, newValue:string, newPlainTextValue:string, mentions:MentionItem[] ) => {
     if (note.id > 0) {
