@@ -41,7 +41,7 @@ function MentionsCard({ allNotes, userList, onChangeCb, note } : {allNotes:any, 
       
       setClickListener(true);
     }
-  }, [note.id]);
+  }, [note.id, isClickListenerAttached]);
    
   const handleChange = (note:any, event:any, newValue:string, newPlainTextValue:string, mentions:MentionItem[] ) => {
     if (note.id > 0) {
