@@ -1,0 +1,103 @@
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
+    padding: 0 .5rem;
+
+    &:first-child {
+      margin-bottom: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex: 1 1 auto;
+      max-height: 35.875rem;
+    }
+
+    &:last-child {
+      margin-top: .5rem;
+      flex: 0 0 auto;
+      align-self: flex-start;
+    }
+  
+    .kata-comp {
+      flex: 1 1 auto;
+      font-size: .875rem;
+      color: blue;  
+      min-width: 28.125rem;
+      max-width: 28.125rem;
+      margin-bottom: .5rem;
+  
+      &:last-child {
+        margin-bottom: 0;
+      }
+  
+      .MuiPaper-root {
+        background-color: lightgray;
+      }
+  
+      .MuiCardContent-root {
+        min-height: 2.625rem;
+        padding-bottom: 0;
+
+        .my-mentions-input__highlighter {
+          border-width: 3px !important;
+          z-index: 2000;
+        }
+
+        .my-mentions-input__suggestions {
+          z-index: 3000 !important;
+
+          .my-mentions-input__suggestions__list {
+            .my-mentions-input__suggestions__item {
+              padding: 0.25rem !important;
+              border-width: .0625rem .0625rem 0 .0625rem !important;
+              border-style: solid !important;
+              border-color: black !important;
+              background-color: whitesmoke;
+              
+              &:last-child {
+                border-bottom-width: .0625rem !important;
+              }
+            }
+          }
+        }
+
+        .my-mention {
+          text-decoration: none;
+          color: blue;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+  
+      .MuiCardActions-root {
+        justify-content: flex-end;
+        padding: .5rem 1rem;
+      }
+    
+      textarea {
+        min-height: 2.625rem;
+        background-color: white !important;
+        border-radius: .3125rem;
+        z-index: 2100;
+  
+        &:read-only {
+          background-color: whitesmoke !important;
+          cursor: default;
+          opacity: .75;
+          z-index: 0;
+        }
+      }
+    }
+  }
+}
+
+
